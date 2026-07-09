@@ -1,97 +1,35 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Слот-машина</title>
+<!doctype html>
+<html dir="ltr" lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Новая вкладка</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f2f2f2;
-        }
-        #slot-machine {
-            margin: 20px;
-            padding: 20px;
-            border: 2px solid #444;
-            background-color: #fff;
-            border-radius: 10px;
-        }
-        #result {
-            font-size: 2em;
-            margin: 20px 0;
-        }
-        #balance, #free-spins {
-            font-size: 1.2em;
-        }
+      body {
+        background: #41384B;
+        margin: 0;
+      }
+
+      #backgroundImage {
+        border: none;
+        height: 100%;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        visibility: hidden;
+        width: 100%;
+      }
+
+      [show-background-image] #backgroundImage {
+        visibility: visible;
+      }
     </style>
-</head>
-<body>
-
-<h1>Слот-машина</h1>
-
-<div id="slot-machine">
-    <div id="result">🎰 🎰 🎰</div>
-    <div id="balance">Баланс: 100</div>
-    <div id="free-spins">Фри-спины: 0</div>
-    
-    <input type="number" id="bet" placeholder="Введите ставку" min="1" max="100">
-    <button onclick="spin()">Прокрутить</button>
-    <button onclick="useFreeSpin()">Использовать фри-спин</button>
-</div>
-
-<script>
-    let balance = 100;
-    let freeSpins = 0;
-
-    function spin() {
-        const bet = parseInt(document.getElementById('bet').value);
-        if (bet > balance || bet <= 0) {
-            alert("Недостаточно средств для ставки или ставка некорректна!");
-            return;
-        }
-
-        balance -= bet;
-        const symbols = ["🍒", "🍋", "🍊", "🍉", "🍇", "🍀"];
-        const result = [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
-        document.getElementById('result').textContent = result.join(' | ');
-
-        if (result[0] === result[1] && result[0] === result[2]) {
-            const win = bet * 10;
-            balance += win;
-            alert(Поздравляем! Вы выиграли ${win} монет!);
-        } else {
-            alert("Вы проиграли!");
-        }
-
-        document.getElementById('balance').textContent = "Баланс: " + balance;
-        checkForFreeSpin();
-    }
-
-    function getRandomSymbol() {
-        const symbols = ["🍒", "🍋", "🍊", "🍉", "🍇", "🍀"];
-        return symbols[Math.floor(Math.random() * symbols.length)];
-    }
-
-    function checkForFreeSpin() {
-        if (Math.random() < 0.1) { // 10% шанс на фри-спин
-            freeSpins++;
-            document.getElementById('free-spins').textContent = "Фри-спины: " + freeSpins;
-            alert("Поздравляем! У вас 1 фри-спин!");
-        }
-    }
-
-    function useFreeSpin() {
-        if (freeSpins > 0) {
-            freeSpins--;
-            document.getElementById('free-spins').textContent = "Фри-спины: " + freeSpins;
-            alert("Используем фри-спин!");
-            spin();
-        } else {
-            alert("У вас нет фри-спинов!");
-        }
-    }
-</script>
-
-</body>
+  </head>
+  <body>
+    <iframe id="backgroundImage" src=""></iframe>
+    <ntp-app></ntp-app>
+    <script type="module" src="new_tab_page.js"></script>
+    <link rel="stylesheet" href="chrome://resources/css/text_defaults_md.css">
+    <link rel="stylesheet" href="chrome://theme/colors.css?sets=ui,chrome">
+    <link rel="stylesheet" href="shared_vars.css">
+  </body>
 </html>
